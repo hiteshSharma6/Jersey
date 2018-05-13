@@ -1,5 +1,7 @@
 package com.zapper.webapp.lzres.query;
 
-public class EvaluationSQL {
+public interface EvaluationSQL {
+
+	String GET_EVALUATION_ID = null;
 
 }

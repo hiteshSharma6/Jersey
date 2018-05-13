@@ -9,10 +9,10 @@ import java.sql.SQLException;
 public class JdbcConnection {
 		
 	public static Connection getConnection() throws SQLException, ClassNotFoundException {
-		Class.forName(Property.getProperty(DbConstants.DRIVER_NAME));
-		Connection con = DriverManager.getConnection(Property.getProperty(DbConstants.URL),
-				Property.getProperty(DbConstants.USERNAME),
-				Property.getProperty(DbConstants.PASSWORD));
+		Class.forName(Property.getProperty(DbConst.DRIVER_NAME));
+		Connection con = DriverManager.getConnection(Property.getProperty(DbConst.URL),
+				Property.getProperty(DbConst.USERNAME),
+				Property.getProperty(DbConst.PASSWORD));
 		System.out.println(con.getCatalog());
 		return con;
 		

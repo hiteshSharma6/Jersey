@@ -1,5 +1,7 @@
 package com.zapper.webapp.lzres.query;
 
-public class TopicSQL {
+public interface TopicSQL {
+
+	String GET_TOPIC_SUMMARY = null;
 
 }

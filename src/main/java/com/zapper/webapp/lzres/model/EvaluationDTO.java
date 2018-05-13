@@ -9,7 +9,8 @@ public class EvaluationDTO {
 	private String className;
 	private String author;
 	private String targetUser;
-	private  String name;
+	private String contentType;
+	private String name;
 	private int id;
 
 	public EvaluationDTO() {
@@ -17,7 +18,7 @@ public class EvaluationDTO {
 	}
 
 	public EvaluationDTO(int evaluationId, String evaluationName, String evaluationDescription, int topicId,
-			String className, String author, String targetUser, String name, int id) {
+			String className, String author, String targetUser, String contentType, String name, int id) {
 		super();
 		this.evaluationId = evaluationId;
 		this.evaluationName = evaluationName;
@@ -26,6 +27,7 @@ public class EvaluationDTO {
 		this.className = className;
 		this.author = author;
 		this.targetUser = targetUser;
+		this.contentType = contentType;
 		this.name = name;
 		this.id = id;
 	}
@@ -86,19 +88,27 @@ public class EvaluationDTO {
 		this.targetUser = targetUser;
 	}
 
-	public String getConceptName() {
+	public String getContentType() {
+		return contentType;
+	}
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+	public String getName() {
 		return name;
 	}
 
-	public void setConceptName(String name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
-	public int getConceptId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setConceptId(int id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -5,25 +5,25 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.zapper.webapp.lzres.query.ConceptSQL;
+import com.zapper.webapp.lzres.query.QuizDisplaySQL;
 import com.zapper.webapp.lzres.utility.JdbcConnection;
 
-public class ConceptDAO {
-	
+public class QuizDisplayDAO {
+
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	
-	public String returnTopicId(int conceptId) throws ClassNotFoundException, SQLException {
+	public int returnQuizDisplaySummary(int userId) throws ClassNotFoundException, SQLException {
 		try {
 			con = JdbcConnection.getConnection();
-			ps = con.prepareStatement(ConceptSQL.GET_TOPIC_ID);
-			ps.setInt(1, conceptId);
+			ps = con.prepareStatement(QuizDisplaySQL.GET_CONCEPT_ID);
+			ps.setInt(1, userId);
 			
 			rs = ps.executeQuery();
 			
 			rs.next();
-			return rs.getString(1);
+			return rs.getInt(1);
 			
 		}finally {
 			JdbcConnection.closeConnection(rs, ps, con);
