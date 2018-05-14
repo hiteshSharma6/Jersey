@@ -8,7 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.zapper.webapp.lzres.model.QuizSummaryDTO;
+import com.zapper.webapp.lzres.model.QuizEvalSummary;
 import com.zapper.webapp.lzres.service.QuizDisplayService;
 
 @Path("/quizdisplay")
@@ -19,7 +19,7 @@ public class QuizDisplayCtrl {
 	@GET
 	@Path("/userid/{userId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<QuizSummaryDTO> getQuizes(@PathParam("userId") int userId) {
+	public List<QuizEvalSummary> getQuizes(@PathParam("userId") int userId) {
 		
 		return quizService.getTopicWiseQuizes(userId);
 		

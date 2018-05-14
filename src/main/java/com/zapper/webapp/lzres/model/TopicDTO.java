@@ -2,8 +2,8 @@ package com.zapper.webapp.lzres.model;
 
 public class TopicDTO {
 	
-	private String id;
-	private String name;
+	private String topicId;
+	private String topicName;
 	private boolean showScoreTrendColumn;
 	private boolean showRemarksColumn;
 
@@ -11,28 +11,28 @@ public class TopicDTO {
 		super();
 	}
 
-	public TopicDTO(String id, String name, boolean showScoreTrendColumn, boolean showRemarksColumn) {
+	public TopicDTO(String topicId, String topicName, boolean showScoreTrendColumn, boolean showRemarksColumn) {
 		super();
-		this.id = id;
-		this.name = name;
+		this.topicId = topicId;
+		this.topicName = topicName;
 		this.showScoreTrendColumn = showScoreTrendColumn;
 		this.showRemarksColumn = showRemarksColumn;
 	}
 
-	public String getId() {
-		return id;
+	public String getTopicId() {
+		return topicId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setTopicId(String topicId) {
+		this.topicId = topicId;
 	}
 
-	public String getName() {
-		return name;
+	public String getTopicName() {
+		return topicName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTopicName(String topicName) {
+		this.topicName = topicName;
 	}
 
 	public boolean isShowScoreTrendColumn() {

@@ -1,44 +1,49 @@
 package com.zapper.webapp.lzres.model.quizEvaluate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ScoreDTO {
 	
-	private String id;
-	private String score;
-	private String color;
+	private String evaluationId;
+	private String totalScore;
+	private String displayColor;
 
 	public ScoreDTO() {
 		super();
 	}
 
-	public ScoreDTO(String id, String score, String color) {
+	public ScoreDTO(String evaluationId, String totalScore, String displayColor) {
 		super();
-		this.id = id;
-		this.score = score;
-		this.color = color;
+		this.evaluationId = evaluationId;
+		this.totalScore = totalScore;
+		this.displayColor = displayColor;
 	}
 
-	public String getId() {
-		return id;
+	@JsonProperty("id")
+	public String getEvaluationId() {
+		return evaluationId;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void setEvaluationId(String evaluationId) {
+		this.evaluationId = evaluationId;
 	}
 
-	public String getScore() {
-		return score;
+	@JsonProperty("score")
+	public String getTotalScore() {
+		return totalScore;
 	}
 
-	public void setScore(String score) {
-		this.score = score;
+	public void setTotalScore(String totalScore) {
+		this.totalScore = totalScore;
 	}
 
-	public String getColor() {
-		return color;
+	@JsonProperty("color")
+	public String getDisplayColor() {
+		return displayColor;
 	}
 
-	public void setColor(String color) {
-		this.color = color;
+	public void setDisplayColor(String displayColor) {
+		this.displayColor = displayColor;
 	}
 
 }

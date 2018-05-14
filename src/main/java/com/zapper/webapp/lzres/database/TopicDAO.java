@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedSet;
 
 import com.zapper.webapp.lzres.model.TopicDTO;
 import com.zapper.webapp.lzres.query.TopicSQL;
@@ -15,22 +18,24 @@ public class TopicDAO {
 	PreparedStatement ps;
 	ResultSet rs;
 	
-	public TopicDTO returnTopicSummary(String topicId) throws SQLException, ClassNotFoundException {
+	public List<TopicDTO> returnAllTopicSummary(SortedSet<String> allTopicsId) throws SQLException, ClassNotFoundException {
 		
 		try {
 			con = JdbcConnection.getConnection();
 			ps = con.prepareStatement(TopicSQL.GET_TOPIC_SUMMARY);
-			ps.setString(1, topicId);
-			rs = ps.executeQuery();
 			
-			if(rs.isBeforeFirst()) {
-				System.out.println("Empty Topic");
-				return null;
-			} else {
-				rs.next();
+			List<TopicDTO> topicsList = new ArrayList<>();
+			for(String topicId : allTopicsId) {
+				ps.setString(1, topicId);
 				
-				return new TopicDTO(topicId, rs.getString(2), rs.getBoolean(3), rs.getBoolean(4));
+				rs = ps.executeQuery();
+				if(rs.next())
+					topicsList.add(new TopicDTO(topicId, rs.getString("topic_name"), rs.getBoolean("show_score_trend_column"), rs.getBoolean("show_remarks_column")));
 			}
+			
+			if(topicsList.size() == 0)
+				return null;
+			return topicsList;
 			
 		}finally {
 			JdbcConnection.closeConnection(rs, ps, con);

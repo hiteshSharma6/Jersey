@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.zapper.webapp.lzres.model.ConceptDTO;
 import com.zapper.webapp.lzres.query.ConceptSQL;
 import com.zapper.webapp.lzres.utility.JdbcConnection;
 
@@ -14,16 +17,25 @@ public class ConceptDAO {
 	PreparedStatement ps = null;
 	ResultSet rs = null;
 	
-	public String returnTopicId(int conceptId) throws ClassNotFoundException, SQLException {
+	public List<ConceptDTO> returnAllCNameAndTId(int[] allConceptIds) throws ClassNotFoundException, SQLException {
 		try {
 			con = JdbcConnection.getConnection();
-			ps = con.prepareStatement(ConceptSQL.GET_TOPIC_ID);
-			ps.setInt(1, conceptId);
+			ps = con.prepareStatement(ConceptSQL.GET_CNAME_AND_TID);
 			
-			rs = ps.executeQuery();
+			List<ConceptDTO> conceptsList = new ArrayList<>();
+			for(int conceptId : allConceptIds) {
+				ps.setInt(1, conceptId);
+				
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					conceptsList.add(new ConceptDTO(conceptId, rs.getString("name"), rs.getString("topic_id")));
+				}
+				
+			}
 			
-			rs.next();
-			return rs.getString(1);
+			if(conceptsList.size() == 0)
+				return null;
+			return conceptsList;
 			
 		}finally {
 			JdbcConnection.closeConnection(rs, ps, con);
