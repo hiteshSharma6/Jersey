@@ -1,6 +1,5 @@
 package com.zapper.webapp.lzres.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,6 +17,13 @@ public class QuizEvalSummary {
 	private RemarkDTO remark;
 	private ScoreDTO currentScore;
 	private List<ScoreDTO> scoreTrend;
+
+	@Override
+	public String toString() {
+		return "QuizEvalSummary [conceptName=" + conceptName + ", conceptId=" + conceptId + ", isLocked=" + isLocked
+				+ ", isCompleted=" + isCompleted + ", remark=" + remark + ", currentScore=" + currentScore
+				+ ", scoreTrend=" + scoreTrend + "]";
+	}
 
 	public QuizEvalSummary() {
 		super();
@@ -89,7 +95,7 @@ public class QuizEvalSummary {
 		return scoreTrend;
 	}
 
-	public void setScoreTrend(ArrayList<ScoreDTO> scoreTrend) {
+	public void setScoreTrend(List<ScoreDTO> scoreTrend) {
 		this.scoreTrend = scoreTrend;
 	}
 

@@ -76,7 +76,7 @@ public class MyQuizzes {
 		return evaluations;
 	}
 
-	public void setEvaluations(ArrayList<QuizEvalSummary> evaluations) {
+	public void setEvaluations(List<QuizEvalSummary> evaluations) {
 		this.evaluations = evaluations;
 	}
 

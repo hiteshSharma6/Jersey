@@ -8,89 +8,58 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.zapper.webapp.lzres.database.ConceptDAO;
+import com.zapper.webapp.lzres.database.TestScoreDAO;
 import com.zapper.webapp.lzres.database.TopicDAO;
 import com.zapper.webapp.lzres.model.MyQuizzes;
 import com.zapper.webapp.lzres.model.QuizEvalSummary;
 import com.zapper.webapp.lzres.model.TopicDTO;
+import com.zapper.webapp.lzres.model.quizEvaluate.ScoreDTO;
 
 public class QuizDisplayService {
 
 	private List<MyQuizzes> myQuizzesList = null;
 
 	public List<MyQuizzes> getTopicWiseQuizes(int userId) {
-		List<MyQuizzes> myQuizzesList = getUserQuizzes(userId);
-		
-		return myQuizzesList;
-	}
-
-	private List<MyQuizzes> getUserQuizzes(int userId) {
 		try {
 			Map<Integer, String> conceptTopicMap = getConceptTopicMap(userId);
 			enterTopicDetailsInQuiz(conceptTopicMap);
+			enterEachQuizScore(conceptTopicMap);
 
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 		return myQuizzesList;
-		
-		/*try {
-			int allConceptIds[] = getAllConceptIdForUser(userId);
-			List<ConceptDTO> conceptsList = getAllConceptsList(allConceptIds); 
-			SortedSet<String> allTopicsId = getSortedTopics(conceptsList);
-			List<TopicDTO> topicList = getAllTopicsDetail(allTopicsId);
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}*/
-	}
-/*
-	private List<TopicDTO> getAllTopicsDetail(SortedSet<String> allTopicsId) throws ClassNotFoundException, SQLException {
-		List<TopicDTO> allTopicsList = new TopicDAO().returnAllTopicSummary(allTopicsId);
-		return null;
+
 	}
 
-	private SortedSet<String> getSortedTopics(List<ConceptDTO> conceptsList) {
-		SortedSet<String> sortedTopic = new TreeSet<>();
-		for(ConceptDTO concept : conceptsList) {
-			sortedTopic.add(concept.getTopicId());
+	private void enterEachQuizScore(Map<Integer, String> conceptTopicMap) throws ClassNotFoundException, SQLException {
+		Map<String, Map<Integer, List<ScoreDTO>>> scoreQuizMap = new TestScoreDAO().returnQuizWiseScore(conceptTopicMap);
+		
+		int i=0, j=0;
+		
+		for(Map.Entry<String, Map<Integer, List<ScoreDTO>>> topicList : scoreQuizMap.entrySet()) {
+			MyQuizzes topicQuiz = myQuizzesList.get(i);
+			j=0;
+			
+			for(Map.Entry<Integer, List<ScoreDTO>> conceptList : topicList.getValue().entrySet()) {
+				List<ScoreDTO> conceptScore = conceptList.getValue();
+				QuizEvalSummary conceptQuiz = topicQuiz.getEvaluations().get(j);
+				
+				System.out.println(conceptScore.toString());
+				
+				conceptQuiz.setCurrentScore(conceptScore.get(0));
+				conceptScore.remove(0);
+				
+				conceptQuiz.setScoreTrend(conceptScore);
+				
+				++j;
+				
+			}
+			++i;
+			
 		}
-		
-		return sortedTopic;
-	}
 
-	private List<ConceptDTO> getAllConceptsList(int[] allConceptIds) throws ClassNotFoundException, SQLException {
-		List<ConceptDTO> allConceptsList = new ConceptDAO().returnAllCNameAndTId(allConceptIds);
-		addConceptNameToList(allConceptsList);
-		
-		return allConceptsList;
-		
 	}
-
-	private void addConceptNameToList(List<ConceptDTO> allConceptsList) {
-		int i = 0;
-		for(ConceptDTO concept : allConceptsList) {
-			finalQuizzesEvalList.get(i++).setConceptName(concept.getConceptName());
-		}
-		
-	}
-
-	private int[] getAllConceptIdForUser(int userId) throws ClassNotFoundException, SQLException {
-		List<QuizEvalSummary> quizzesEval = new QuizDisplayDAO().returnAllConceptId(userId);
-		int i=0, allConceptIds[] = new int[quizzesEval.size()];
-		
-		for(QuizEvalSummary quizEval : quizzesEval) {
-			allConceptIds[i++] = quizEval.getConceptId();
-		}
-		addQuizzesEvalToList(quizzesEval);
-		
-		return allConceptIds;
-		
-	}
-
-	private void addQuizzesEvalToList(List<QuizEvalSummary> quizzesEval) {
-		finalQuizzesEvalList = quizzesEval;
-		
-	}
-*/
 
 	private void enterTopicDetailsInQuiz(Map<Integer, String> conceptTopicMap) throws ClassNotFoundException, SQLException {
 		Set<String> topicsId = getTopicsId(conceptTopicMap);
@@ -111,9 +80,7 @@ public class QuizDisplayService {
 		
 		for(String topics : conceptTopicMap.values()) {
 			topicsId.add(topics);
-			System.out.println("TOPics: "+ topics);
 		}
-		System.out.println("Set :"+ topicsId);
 		return topicsId;
 
 	}
