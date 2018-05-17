@@ -1,7 +1,9 @@
 package com.zapper.webapp.lzres.model.quizEvaluate;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+@JsonPropertyOrder({ "id", "score", "color" })
 public class ScoreDTO {
 	
 	private String evaluationId;

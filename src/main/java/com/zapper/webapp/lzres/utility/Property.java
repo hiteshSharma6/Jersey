@@ -3,24 +3,24 @@ package com.zapper.webapp.lzres.utility;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Property {
+public abstract class Property {
 	
 	private static Properties prop = null;
-	private InputStream in = null;
+	private static InputStream in = null;
 	private static final String CONFIG_FILE_NAME = "config.properties";
 	
-	public Property() {
+	static {
 		try {
 			prop = new Properties();
 			in = Property.class.getClassLoader().getResourceAsStream(CONFIG_FILE_NAME);
 			
 			if(in == null) {
 				System.out.println("Unable to find file: "+ CONFIG_FILE_NAME);
-				return;
 			}
-			
-			prop.load(in);
-			in.close();
+			else {
+				prop.load(in);
+				in.close();
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

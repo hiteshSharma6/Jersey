@@ -7,35 +7,51 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zapper.webapp.lzres.model.ConceptDTO;
+import com.zapper.webapp.lzres.model.MyQuizzes;
+import com.zapper.webapp.lzres.model.QuizEvalSummary;
+import com.zapper.webapp.lzres.model.quizEvaluate.RemarkDTO;
 import com.zapper.webapp.lzres.query.ConceptSQL;
 import com.zapper.webapp.lzres.utility.JdbcConnection;
 
 public class ConceptDAO {
-	
+
 	Connection con = null;
 	PreparedStatement ps = null;
 	ResultSet rs = null;
-	
-	public List<ConceptDTO> returnAllCNameAndTId(int[] allConceptIds) throws ClassNotFoundException, SQLException {
+
+	public List<MyQuizzes> returnAllCDetailsAndTId(int userId) throws ClassNotFoundException, SQLException {
 		try {
 			con = JdbcConnection.getConnection();
-			ps = con.prepareStatement(ConceptSQL.GET_CNAME_AND_TID);
+			ps = con.prepareStatement(ConceptSQL.GET_QDETAILS_CDETAILS_TID);
 			
-			List<ConceptDTO> conceptsList = new ArrayList<>();
-			for(int conceptId : allConceptIds) {
-				ps.setInt(1, conceptId);
-				
-				rs = ps.executeQuery();
-				if(rs.next()) {
-					conceptsList.add(new ConceptDTO(conceptId, rs.getString("name"), rs.getString("topic_id")));
+			List<MyQuizzes> quizzesList = new ArrayList<>();
+			ps.setInt(1, userId);
+			System.out.println(quizzesList);
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				if(quizzesList.isEmpty()) {						
+					quizzesList.add(new MyQuizzes(rs.getString("topic_id")));
+
 				}
+				int lastIndex = quizzesList.size()-1;
+				if(!quizzesList.get(lastIndex).getTopicId().equals(rs.getString("topic_id"))) {
+					quizzesList.add(new MyQuizzes(rs.getString("topic_id")));
+				
+				}
+				quizzesList.get(lastIndex).getEvaluations().add(
+						new QuizEvalSummary(rs.getString("name"), rs.getInt("concept_id"), rs.getBoolean("is_locked"), rs.getBoolean("is_completed"), 
+								new RemarkDTO(rs.getString("text"), rs.getBoolean("have_link"), rs.getString("link_text"), 
+										rs.getBoolean("is_link_action_go_to"), rs.getBoolean("is_link_action_pop_up"), 
+										rs.getString("link_url"), rs.getString("popup_message")
+										), 
+								null, null)
+						);
 				
 			}
-			
-			if(conceptsList.size() == 0)
+				
+			if(quizzesList.size() == 0)
 				return null;
-			return conceptsList;
+			return quizzesList;
 			
 		}finally {
 			JdbcConnection.closeConnection(rs, ps, con);

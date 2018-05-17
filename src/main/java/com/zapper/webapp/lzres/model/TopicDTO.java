@@ -35,7 +35,7 @@ public class TopicDTO {
 		this.topicName = topicName;
 	}
 
-	public boolean isShowScoreTrendColumn() {
+	public boolean getShowScoreTrendColumn() {
 		return showScoreTrendColumn;
 	}
 
@@ -43,7 +43,7 @@ public class TopicDTO {
 		this.showScoreTrendColumn = showScoreTrendColumn;
 	}
 
-	public boolean isShowRemarksColumn() {
+	public boolean getShowRemarksColumn() {
 		return showRemarksColumn;
 	}
 

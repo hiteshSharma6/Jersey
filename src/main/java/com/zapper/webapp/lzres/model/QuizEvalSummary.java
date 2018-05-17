@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.zapper.webapp.lzres.model.quizEvaluate.RemarkDTO;
 import com.zapper.webapp.lzres.model.quizEvaluate.ScoreDTO;
 
+@JsonPropertyOrder({ "name", "id", "isCompleted", "isLocked", "remark", "currentScore", "scoreTrend" })
 public class QuizEvalSummary {
 	
 	private String conceptName;
@@ -51,19 +53,19 @@ public class QuizEvalSummary {
 		this.conceptId = conceptId;
 	}
 
-	public boolean isLocked() {
+	public boolean getIsLocked() {
 		return isLocked;
 	}
 
-	public void setLocked(boolean isLocked) {
+	public void setIsLocked(boolean isLocked) {
 		this.isLocked = isLocked;
 	}
 
-	public boolean isCompleted() {
+	public boolean getIsCompleted() {
 		return isCompleted;
 	}
 
-	public void setCompleted(boolean isCompleted) {
+	public void setIsCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
 	}
 

@@ -1,11 +1,14 @@
 package com.zapper.webapp.lzres.model.quizEvaluate;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "text", "haveLink", "linkText", "isLinkActionGoTo", "isLinkActionPopUp", "linkUrl", "popupMessage" })
 public class RemarkDTO {
 	
 	private String text;
 	private boolean haveLink;
 	private String linkText;
-	private boolean isLinkActionGoto;
+	private boolean isLinkActionGoTo;
 	private boolean isLinkActionPopUp;
 	private String linkUrl;
 	private String popupMessage;
@@ -14,13 +17,13 @@ public class RemarkDTO {
 		super();
 	}
 
-	public RemarkDTO(String text, boolean haveLink, String linkText, boolean isLinkActionGoto,
+	public RemarkDTO(String text, boolean haveLink, String linkText, boolean isLinkActionGoTo,
 			boolean isLinkActionPopUp, String linkUrl, String popupMessage) {
 		super();
 		this.text = text;
 		this.haveLink = haveLink;
 		this.linkText = linkText;
-		this.isLinkActionGoto = isLinkActionGoto;
+		this.isLinkActionGoTo = isLinkActionGoTo;
 		this.isLinkActionPopUp = isLinkActionPopUp;
 		this.linkUrl = linkUrl;
 		this.popupMessage = popupMessage;
@@ -34,7 +37,7 @@ public class RemarkDTO {
 		this.text = text;
 	}
 
-	public boolean isHaveLink() {
+	public boolean getHaveLink() {
 		return haveLink;
 	}
 
@@ -50,19 +53,19 @@ public class RemarkDTO {
 		this.linkText = linkText;
 	}
 
-	public boolean isLinkActionGoto() {
-		return isLinkActionGoto;
+	public boolean getIsLinkActionGoto() {
+		return isLinkActionGoTo;
 	}
 
-	public void setLinkActionGoto(boolean isLinkActionGoto) {
-		this.isLinkActionGoto = isLinkActionGoto;
+	public void setIsLinkActionGoto(boolean isLinkActionGoTo) {
+		this.isLinkActionGoTo = isLinkActionGoTo;
 	}
 
-	public boolean isLinkActionPopUp() {
+	public boolean getIsLinkActionPopUp() {
 		return isLinkActionPopUp;
 	}
 
-	public void setLinkActionPopUp(boolean isLinkActionPopUp) {
+	public void setIsLinkActionPopUp(boolean isLinkActionPopUp) {
 		this.isLinkActionPopUp = isLinkActionPopUp;
 	}
 
